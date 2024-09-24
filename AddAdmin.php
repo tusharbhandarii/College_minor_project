@@ -81,7 +81,7 @@
                   <!-- name  -->
                   <div class="form-group">
                     <label for="exampleInputName">Admin Name</label>
-                    <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
+                    <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter ">
                   </div>
                   <!-- ph no  -->
                   <div class="form-group">
