@@ -11,6 +11,24 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- stylesheet for validation  -->
+   <style>
+      /* Input valid and invalid states */
+      input.is-invalid {
+          border-color: red;
+      }
+
+      input.is-valid {
+          border-color: green;
+      }
+
+      /* Error message styling */
+      .error-message {
+          color: red;
+          font-size: 0.9em;
+          margin-top: 5px;
+      }
+   </style>
 
 
   
@@ -75,65 +93,201 @@
 
 
 
-              <!-- form start -->
-              <form method='post' enctype="multipart/form-data">
-                <div class="card-body">
-                  <!-- name  -->
-                  <div class="form-group">
-                    <label for="exampleInputName">Technician Name</label>
-                    <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
+            <!-- form start -->
+            <form id="technicianForm" method='post' enctype="multipart/form-data">
+              <div class="card-body">
+              <!-- name -->
+              <div class="form-group">
+                  <label for="exampleInputName">Technician Name</label>
+                  <input name="name" type="text" class="form-control" id="name" placeholder="Enter name">
+                  <div class="error-message" id="nameError"></div>
+              </div>
+              <!-- ph no -->
+              <div class="form-group">
+                  <label for="exampleInputPhno">Mobile Number</label>
+                  <input name="phno" type="text" class="form-control" id="phno" placeholder="Enter number">
+                  <div class="error-message" id="phnoError"></div>
+              </div>
+              <!-- address -->
+              <div class="form-group">
+                  <label for="exampleInputAddress">Address</label>
+                  <input name="address" type="text" class="form-control" id="address" placeholder="Enter address">
+                  <div class="error-message" id="addressError"></div>
+              </div>
+              <!-- email -->
+              <div class="form-group">
+                  <label for="exampleInputEmail">Email address</label>
+                  <input name="email" type="text" class="form-control" id="email" placeholder="Enter email">
+                  <div class="error-message" id="emailError"></div>
+              </div>
+              <!-- specialization -->
+              <div class="form-group">
+                  <label for="exampleInputSpecialize">Specialization</label>
+                  <input name="specialize" type="text" class="form-control" id="specialize" placeholder="Enter specialization">
+                  <div class="error-message" id="specializeError"></div>
+              </div>
+              <!-- image -->
+              <div class="form-group">
+                  <label for="exampleInputFile">File input</label>
+                  <div class="input-group">
+                      <div class="custom-file">
+                          <input name="image" type="file" class="custom-file-input" id="image">
+                          <label class="custom-file-label" for="image">Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                          <span class="input-group-text">Upload</span>
+                      </div>
                   </div>
-                  <!-- ph no  -->
-                  <div class="form-group">
-                    <label for="exampleInputPhno">Mobile Number</label>
-                    <input name="phno" type="text" class="form-control" id="exampleInputPhno" placeholder="Enter number">
-                  </div>
-                  <!-- address  -->
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Address</label>
-                    <input name="address" type="email" class="form-control" id="exampleInputEmail1" placeholder="Address">
-                  </div>
-                  <!-- email  -->
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                  </div>
-                  <!-- image  -->
-                  <div class="form-group">
-                      <label for="exampleInputFile">File input</label>
-                      <div class="input-group">
-                          <div class="custom-file">
-                              <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
-                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <span class="input-group-text">Upload</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- specelize  -->
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Specialization</label>
-                      <input name="specialize" type="text" class="form-control" id="exampleInputEmail1" placeholder="specialize">
-                    </div>
-                  <!-- password  -->                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input name="pass" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                  </div>
-                  <!-- repassword  -->
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Repassword</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repassword">
-                  </div>
+                  <div class="error-message" id="imageError"></div>
+              </div>
+              <!-- password -->
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input name="pass" type="text" class="form-control" id="password" placeholder="Password">
+                <div class="error-message" id="passwordError"></div>
+              </div>
 
-                </div>
-                <!-- /.submit button -->
+              <!-- repassword -->
+              <div class="form-group">
+                  <label for="exampleInputRepassword">Re-enter Password</label>
+                  <input type="text" class="form-control" id="repassword" placeholder="Repassword">
+                  <div class="error-message" id="repasswordError"></div>
+              </div>
 
-                <div class="card-footer">
-                  <button name="btn" type="submit" class="btn btn-primary" >Submit</button>
-                </div>
-              </form>
+              <!-- submit button -->
+              <div class="card-footer">
+                  <center><button name="btn" type="submit" class="btn btn-primary">Submit</button></center> 
+              </div>
+            </form>
+
+            <!-- script file  -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('technicianForm');
+
+    form.addEventListener('submit', function (e) {
+        let valid = true;
+
+        // Get form elements
+        const nameInput = document.getElementById('name');
+        const phnoInput = document.getElementById('phno');
+        const addressInput = document.getElementById('address');
+        const emailInput = document.getElementById('email');
+        const specializeInput = document.getElementById('specialize');
+        const imageInput = document.getElementById('image');
+        const passwordInput = document.getElementById('password');
+        const repasswordInput = document.getElementById('repassword');
+
+        // Clear previous error messages
+        clearErrors();
+
+        // Validate Name
+        if (nameInput.value.trim() === "") {
+            showError(nameInput, 'Name is required', 'nameError');
+            valid = false;
+        } else {
+            markValid(nameInput);
+        }
+
+        // Validate Mobile Number (10 digits)
+        const phonePattern = /^[0-9]{10}$/;
+        if (!phonePattern.test(phnoInput.value.trim())) {
+            showError(phnoInput, 'Invalid phone number (must be 10 digits)', 'phnoError');
+            valid = false;
+        } else {
+            markValid(phnoInput);
+        }
+
+        // Validate Address
+        if (addressInput.value.trim() === "") {
+            showError(addressInput, 'Address is required', 'addressError');
+            valid = false;
+        } else {
+            markValid(addressInput);
+        }
+
+        // Validate Email
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (!emailPattern.test(emailInput.value.trim())) {
+            showError(emailInput, 'Invalid email address', 'emailError');
+            valid = false;
+        } else {
+            markValid(emailInput);
+        }
+
+        // Validate Specialization
+        if (specializeInput.value.trim() === "") {
+            showError(specializeInput, 'Specialization is required', 'specializeError');
+            valid = false;
+        } else {
+            markValid(specializeInput);
+        }
+
+        // Validate Image Upload
+        if (imageInput.files.length === 0) {
+            showError(imageInput, 'Image file is required', 'imageError');
+            valid = false;
+        } else {
+            markValid(imageInput);
+        }
+
+        // Validate Password (Non-Empty)
+        const passwordValue = passwordInput.value.trim();
+        if (passwordValue === "") {
+            showError(passwordInput, 'Password is required', 'passwordError');
+            markInvalid(passwordInput);
+            valid = false;
+        } else {
+            markValid(passwordInput);
+        }
+
+        // Validate Repassword (Password Match Check)
+        if (repasswordInput.value.trim() === "") {
+            showError(repasswordInput, 'Please confirm your password', 'repasswordError');
+            markInvalid(repasswordInput);
+            valid = false;
+        } else if (passwordValue !== repasswordInput.value.trim()) {
+            showError(repasswordInput, 'Passwords do not match', 'repasswordError');
+            markInvalid(repasswordInput);
+            valid = false;
+        } else {
+            markValid(repasswordInput);
+        }
+
+        // Prevent form submission if invalid
+        if (!valid) {
+            e.preventDefault();
+        }
+    });
+
+    // Helper functions for showing and clearing errors
+    function showError(input, message, errorElementId) {
+        input.classList.add('is-invalid');
+        document.getElementById(errorElementId).innerText = message;
+    }
+
+    function markValid(input) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+    }
+
+    function markInvalid(input) {
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+    }
+
+    function clearErrors() {
+        const errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(el => el.innerText = '');
+
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.classList.remove('is-invalid', 'is-valid');
+        });
+    }
+});
+
+</script>
            
               <!-- fetching image  -->
               <?php

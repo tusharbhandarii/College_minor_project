@@ -80,12 +80,12 @@
                         {
                             echo "error in connection";
                         }
-                        $selectquery="select * from category ";
+                        $selectquery="select * from service ";
                         $res=mysqli_query($con,$selectquery);
                         while($row=mysqli_fetch_assoc($res))
                         {
                     ?>
-                        <option value="<?php echo $row['categoryname'] ?>" ><?php echo $row['categoryname']?></option>
+                        <option value="<?php echo $row['category'] ?>" ><?php echo $row['category']?></option>
                     <?php
                         }
                     ?>
@@ -110,22 +110,22 @@
                 </div>
                  <!-- description  -->
                 <div class="form-group">
-                    <label for="exampleInputname">Description</label>
+                    <label for="exampleInputname">DESCRIPTION</label>
                     <input type="text" class="form-control" id="exampleInputname" placeholder="Description" name="description">
                 </div>   
                  <!-- price  -->
                 <div class="form-group">
-                    <label for="exampleInputname">Price</label>
+                    <label for="exampleInputname">PRICE</label>
                     <input type="text" class="form-control" id="exampleInputname" placeholder="Price" name="price">
                 </div>   
                  <!-- duration  -->
                 <div class="form-group">
-                    <label for="exampleInputname">Duration</label>
+                    <label for="exampleInputname">DURATION</label>
                     <input type="text" class="form-control" id="exampleInputname" placeholder="Duration" name="duration">
                 </div>
                 <!-- image  -->
                 <div class="form-group">
-                      <label for="exampleInputFile">Image</label>
+                      <label for="exampleInputFile">IMAGE</label>
                       <div class="input-group">
                           <div class="custom-file">
                               <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
@@ -196,7 +196,7 @@
                             $price=$_POST['price'];
                             $duration=$_POST['duration'];
                       
-                      $insertQuery = "INSERT INTO service VALUES('','$service','$category','$subcategory','$description','$price','$duration','$image_name')";
+                      $insertQuery = "INSERT INTO service VALUES('','$category','$service','$subcategory','$description','$price','$duration','$image_name')";
                       if(mysqli_query($con,$insertQuery))
                       {
                         echo "<script>alert('data inserted ');window.location.href='AddService.php';</script>";
@@ -277,8 +277,8 @@
                         <td><?php echo $row['price'];?></td>
                         <td><?php echo $row['duration'];?></td>
                         <td><?php echo $row['image'];?></td>
-                        <td><center><a class="btn btn-primary" href="EditSubCategory.php?q=<?php echo $row['scatid'];?>">edit</a></center></td>
-                        <td><center><a class="btn btn-primary" href="DeleteSubCategory.php?q=<?php echo $row['scatid'];?>">delete</a></center></td>
+                        <td><center><a class="btn btn-primary" href="EditService.php?q=<?php echo $row['slno'];?>">edit</a></center></td>
+                        <td><center><a class="btn btn-primary" href="DeleteService.php?q=<?php echo $row['slno'];?>">delete</a></center></td>
 
                 </tr>
             <?php
