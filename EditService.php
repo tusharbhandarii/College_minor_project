@@ -40,7 +40,7 @@
           <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">General Form</li>
+              <li class="breadcrumb-item active">Edit Category</li>
             </ol>
           </div>
         </div>
@@ -59,16 +59,29 @@
                 <h3 class="card-title">Quick Example</h3>
               </div>
               <!-- /.card-header -->
-              <!-- form start -->
-              <form method="POST" enctype="multipart/form-data">
-                  <div class="card-body">
+              
 
+            <?php
+                $con = mysqli_connect("localhost", "root","","demoproject");
+                    if(!$con){
+                        echo "error in connection";
+                    }else{
 
+                        $q = $_GET['q'];
+                        $selectquery = "select * from service where slno='$q' ";
+                        $res = mysqli_query($con,$selectquery);
+                        $row = mysqli_fetch_assoc($res); 
+            ?>
 
+                        <!-- form start -->
+
+            <form method="POST" enctype="multipart/form-data">
+                <div class="card-body">
+                  <div class="form-group">
                     <!-- service  -->
                 <div class="form-group">
                     <label for="exampleInputname">SERVICE NAME</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Service Name" name="service">
+                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['servicename'];?>" name="service">
                 </div>                  
                     <!-- category  -->
                 <div class="form-group">
@@ -80,12 +93,12 @@
                         {
                             echo "error in connection";
                         }
-                        $selectquery="select * from service ";
+                        $selectquery="select * from category ";
                         $res=mysqli_query($con,$selectquery);
                         while($row=mysqli_fetch_assoc($res))
                         {
                     ?>
-                        <option value="<?php echo $row['category'] ?>" ><?php echo $row['category']?></option>
+                        <option value="<?php echo $row['categoryname']; ?>" ><?php echo $row['categoryname'];?></option>
                     <?php
                         }
                     ?>
@@ -102,26 +115,33 @@
                         while($row=mysqli_fetch_assoc($res))
                         {
                     ?>
-                        <option value="<?php echo $row['subcategory'] ?>" ><?php echo $row['subcategory']?></option>
+                        <option value="<?php echo $row['subcategory']; ?>" ><?php echo $row['subcategory'];?></option>
                     <?php
                         }
                     ?>
                     </select>
                 </div>
+
+                <?php
+                            $q = $_GET['q'];
+                            $selectquery = "select * from service where slno='$q' ";
+                            $res = mysqli_query($con,$selectquery);
+                            $row = mysqli_fetch_assoc($res); 
+                ?>
                  <!-- description  -->
                 <div class="form-group">
                     <label for="exampleInputname">DESCRIPTION</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Description" name="description">
+                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['description'];?>" name="description">
                 </div>   
                  <!-- price  -->
                 <div class="form-group">
                     <label for="exampleInputname">PRICE</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Price" name="price">
+                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['price'];?>" name="price">
                 </div>   
                  <!-- duration  -->
                 <div class="form-group">
                     <label for="exampleInputname">DURATION</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Duration" name="duration">
+                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['duration'];?>" name="duration">
                 </div>
                 <!-- image  -->
                 <div class="form-group">
@@ -135,21 +155,18 @@
                                 <span class="input-group-text">Upload</span>
                             </div>
                         </div>
-                </div>   
-                    
-
-
-
+                </div>
+                  </div>                
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <input type="submit" value="submit" onclick="return check()" name="btn" class="btn btn-primary">
+                  <input type="submit" value="edit" onclick="return check()" name="btn" class="btn btn-primary">
                 </div>
                 
-              </form>
-              <!-- fetching image  -->
-              <?php
+            </form>
+
+            <?php
                 $con = mysqli_connect('localhost','root','','demoproject');
                 if(!$con){
                   echo "Error in connection";
@@ -179,7 +196,7 @@
                        else
                        {
                               $image_name=time().'.'.$extension;
-                              $newname="uploadimage/servicee/".$image_name;        
+                              $newname="uploadimage/service/".$image_name;        
                               $copied = copy($_FILES['image']['tmp_name'], $newname);
                               if (!$copied) 
                               {
@@ -189,25 +206,39 @@
                           }
                       }
 
-                            $service=$_POST['service'];
-                            $category = mysqli_real_escape_string($con, $_POST['category']);
-                            $subcategory = mysqli_real_escape_string($con, $_POST['subcategory']);
-                            $description=$_POST['description'];
-                            $price=$_POST['price'];
-                            $duration=$_POST['duration'];
-                      
-                      $insertQuery = "INSERT INTO service VALUES('','$category','$service','$subcategory','$description','$price','$duration','$image_name')";
-                      if(mysqli_query($con,$insertQuery))
-                      {
-                        echo "<script>alert('data inserted ');window.location.href='AddService.php';</script>";
-                      }else{
-                        echo "<script>alert('data is not inserted ');window.location.href='AddService.php';</script>";
-                      }
+
+                        $service=$_POST['service'];
+                        $category=$_POST['category'];
+                        $subcategory=$_POST['subcategory'];
+                        $description=$_POST['description'];
+                        $price=$_POST['price'];
+                        $duration=$_POST['duration'];
+
+                        // updating the database
+
+                        $editquery = "UPDATE service SET category='$category', servicename='$service', subcategory='$subcategory', description='$description',   price='$price', duration='$duration', image='$image_name' WHERE slno='$q' ";
+                        if(mysqli_query($con, $editquery))
+                        {
+                            // echo "<script>
+                            // alert('data updated !! ');window.location.href='AddService.php';</script>";
+                        }
+                        else
+                        {
+                        // echo "<script>
+                        // alert('data is not updated !! ');window.location.href='AddService.php';</script>";
+                        }
                     }
                   }
               ?>
-         
-                    <!-- /.card -->
+
+
+            <?php
+                        
+                        }
+                        
+            ?> 
+  
+            <!-- /.card -->
 
 
           </div>
@@ -234,78 +265,6 @@
       </div><!-- /.container-fluid -->
     </section>
 
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-           
-            <!-- /.card -->
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>SERVICE</th>
-                    <th>CATEGORY</th>
-                    <th>SUBCATEGORY</th>
-                    <th>DESCRIPTION</th>
-                    <th>PRICE</th>
-                    <th>DURATION</th>
-                    <th>IMAGE</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                      
-                 
-            <?php
-                $selectquery="select * from service ";
-                $res=mysqli_query($con,$selectquery);
-                while($row=mysqli_fetch_assoc($res))
-                {
-            ?>
-                        <td><?php echo $row['servicename'];?></td>
-                        <td><?php echo $row['category'];?></td>
-                        <td><?php echo $row['subcategory'];?></td>
-                        <td><?php echo $row['description'];?></td>
-                        <td><?php echo $row['price'];?></td>
-                        <td><?php echo $row['duration'];?></td>
-                        <td><?php echo $row['image'];?></td>
-                        <td><center><a class="btn btn-primary" href="EditService.php?q=<?php echo $row['slno'];?>">edit</a></center></td>
-                        <td><center><a class="btn btn-primary" href="DeleteService.php?q=<?php echo $row['slno'];?>">delete</a></center></td>
-
-                </tr>
-            <?php
-                }
-            ?>
-                
-                 
-             
-                
-               
-              
-                  
-                  </tbody>
-                  
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-
-    <!-- /.content -->
-  </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
