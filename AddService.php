@@ -250,7 +250,6 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>SL NO</th>
                     <th>SERVICE</th>
                     <th>CATEGORY</th>
                     <th>SUBCATEGORY</th>
@@ -269,7 +268,6 @@
                 while($row=mysqli_fetch_assoc($res))
                 {
             ?>
-                    <tr> <td><?php echo $row['slno'];?></td>
                         <td><?php echo $row['servicename'];?></td>
                         <td><?php echo $row['category'];?></td>
                         <td><?php echo $row['subcategory'];?></td>
@@ -277,8 +275,8 @@
                         <td><?php echo $row['price'];?></td>
                         <td><?php echo $row['duration'];?></td>
                         <td><?php echo $row['image'];?></td>
-                        <td><center><a class="btn btn-primary" href="EditSubCategory.php?q=<?php echo $row['scatid'];?>">edit</a></center></td>
-                        <td><center><a class="btn btn-primary" href="DeleteSubCategory.php?q=<?php echo $row['scatid'];?>">delete</a></center></td>
+                        <td><center><a class="btn btn-primary" href="EditService.php?q=<?php echo $row['slno'];?>">edit</a></center></td>
+                        <td><center><a class="btn btn-primary" href="DeleteService.php?q=<?php echo $row['slno'];?>">delete</a></center></td>
 
                 </tr>
             <?php
