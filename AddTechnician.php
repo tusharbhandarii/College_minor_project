@@ -182,12 +182,17 @@
         clearErrors();
 
         // Validate Name
+        const namePattern = /^[a-zA-Z\s]+$/;
         if (nameInput.value.trim() === "") {
             showError(nameInput, 'Name is required', 'nameError');
+            valid = false;
+        } else if (!namePattern.test(nameInput.value.trim())) {
+            showError(nameInput, 'Name must contain only letters and spaces', 'nameError');
             valid = false;
         } else {
             markValid(nameInput);
         }
+
 
         // Validate Mobile Number (10 digits)
         const phonePattern = /^[0-9]{10}$/;
@@ -216,25 +221,41 @@
         }
 
         // Validate Specialization
+        const specializePattern = /^[a-zA-Z\s]+$/;
         if (specializeInput.value.trim() === "") {
             showError(specializeInput, 'Specialization is required', 'specializeError');
+            valid = false;
+        } else if (!specializePattern.test(specializeInput.value.trim())) {
+            showError(specializeInput, 'Specialization must contain only letters and spaces', 'specializeError');
             valid = false;
         } else {
             markValid(specializeInput);
         }
 
         // Validate Image Upload
+        const allowedExtensions = ['image/jpeg', 'image/png', 'image/gif'];
         if (imageInput.files.length === 0) {
             showError(imageInput, 'Image file is required', 'imageError');
             valid = false;
         } else {
-            markValid(imageInput);
+            const fileType = imageInput.files[0].type;
+            if (!allowedExtensions.includes(fileType)) {
+                showError(imageInput, 'Only JPEG, PNG, or GIF files are allowed', 'imageError');
+                valid = false;
+            } else {
+                markValid(imageInput);
+            }
         }
 
         // Validate Password (Non-Empty)
         const passwordValue = passwordInput.value.trim();
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{6,}$/;
         if (passwordValue === "") {
             showError(passwordInput, 'Password is required', 'passwordError');
+            markInvalid(passwordInput);
+            valid = false;
+        } else if (!passwordPattern.test(passwordValue)) {
+            showError(passwordInput, 'Password must contain at least one letter, one number, one special character, and be at least 6 characters long', 'passwordError');
             markInvalid(passwordInput);
             valid = false;
         } else {
@@ -330,11 +351,16 @@
                           }
                       }
 
-                      $name = $_POST['name'];
+                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $name = ucwords(strtolower($_POST["name"]));
+                        // Save the formatted to the database or perform other operations
+                      }
                       $phno = $_POST['phno'];
                       $address = $_POST['address'];
                       $email = $_POST['email'];
-                      $specialize = $_POST['specialize'];
+                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $specialize = ucwords(strtolower($_POST["specialize"]));
+                      }
                       $pass = $_POST['pass'];
                       
                       $insertQuery = "INSERT INTO technician VALUES('','$name','$phno','$address','$email','$image_name','$specialize','$pass')";
@@ -391,8 +417,8 @@
                     <th>Email</th>
                     <th>Image</th>
                     <th>Specialize</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th></th>
+                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
