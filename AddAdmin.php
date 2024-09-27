@@ -45,7 +45,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>General Form</h1>
+            <h1>Admin Form</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -81,7 +81,7 @@
                   <!-- name  -->
                   <div class="form-group">
                     <label for="exampleInputName">Admin Name</label>
-                    <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter ">
+                    <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
                   </div>
                   <!-- ph no  -->
                   <div class="form-group">
@@ -121,12 +121,12 @@
                 <!-- /.submit button -->
 
                 <div class="card-footer">
-                  <button name="btn" type="submit" class="btn btn-primary" >Submit</button>
+                 <center> <button name="btn" type="submit" class="btn btn-primary" >Submit</button></center>
                 </div>
               </form>
 
               <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
+                 $con = mysqli_connect('localhost','root','','demoproject');
                 if(!$con){
                   echo "Error in connection";
                 }else{
@@ -155,7 +155,7 @@
                        else
                        {
                               $image_name=time().'.'.$extension;
-                              $newname="uploadimage/".$image_name;        
+                              $newname="uploadimage/admin/".$image_name;        
                               $copied = copy($_FILES['image']['tmp_name'], $newname);
                               if (!$copied) 
                               {
@@ -165,12 +165,12 @@
                           }
                       }
 
-                      $name = $_POST['name'];
-                      $phno = $_POST['phno'];
-                      $email = $_POST['email'];
-                      $pass = $_POST['pass'];
+                      $Name = $_POST['name'];
+                      $Phno = $_POST['phno'];
+                      $Email = $_POST['email'];
+                      $Pass = $_POST['pass'];
                       
-                      $insertQuery = "INSERT INTO admin VALUES('','$name','$phno','$email','$pass','$image_name')";
+                      $insertQuery = "INSERT INTO admin VALUES('','$Name','$Phno','$Email','$Pass','$image_name')";
                       if(mysqli_query($con,$insertQuery))
                       {
                         echo "<script>alert('data inserted ');window.location.href='AddAdmin.php';</script>";
@@ -218,13 +218,13 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>id</th>
-                    <th>name</th>
-                    <th>phn_no</th>
-                    <th>email</th>
-                    <th>image</th>
-                    <th>edit</th>
-                    <th>delete</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phn_no</th>
+                    <th>Email</th>
+                    <th>Image</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -233,7 +233,7 @@
 
                   
                  
-                                <?php
+               <?php
                 $con=mysqli_connect("localhost","root","","demoproject");
                 if(!$con)
                 {
@@ -244,13 +244,13 @@
                 while($row=mysqli_fetch_assoc($res))
                 {
                     ?>
-                    <tr> <td><?php echo $row['id'];?></td>
-                    <td><?php echo $row['name'];?></td>
-                        <td><?php echo $row['phn_no'];?></td>
-                        <td><?php echo $row['email'];?></td>
-                        <td><?php echo $row['image_name'];?></td>
-                        <td><a href="editdetails.php?q=<?php echo $row['id'];?>">edit</a></td>
-                        <td><a href="deletedetails.php?q=<?php echo $row['id'];?>">delete</a></td>
+                    <tr> <td><?php echo $row['AID'];?></td>
+                    <td><?php echo $row['Name'];?></td>
+                        <td><?php echo $row['Phno'];?></td>
+                        <td><?php echo $row['Email'];?></td>
+                        <td><?php echo $row['img'];?></td>
+                        <td><a href="EditAdmin.php?q=<?php echo $row['AID'];?>">edit</a></td>
+                        <td><a href="DeleteAdmin.php?q=<?php echo $row['AID'];?>">delete</a></td>
 
                 </tr>
                 <?php
