@@ -54,12 +54,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>General Form</h1>
+            <h1>Add Services</h1>
           </div>
           <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">General Form</li>
+              <li class="breadcrumb-item active">Add Services</li>
             </ol>
           </div>
         </div>
@@ -75,7 +75,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Quick Example</h3>
+                <h3 class="card-title">Add New Service</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -410,7 +410,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
+                <h3 class="card-title">Service List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -442,8 +442,8 @@
                         <td><?php echo $row['price'];?></td>
                         <td><?php echo $row['duration'];?></td>
                         <td><?php echo $row['image'];?></td>
-                        <td><center><a class="btn btn-primary" href="EditService.php?q=<?php echo $row['slno'];?>">edit</a></center></td>
-                        <td><center><a class="btn btn-danger" href="DeleteService.php?q=<?php echo $row['slno'];?>">delete</a></center></td>
+                        <td><center><a class="btn btn-primary" href="EditService.php?q=<?php echo $row['slno'];?>">Edit</a></center></td>
+                        <td><center><a class="btn btn-danger" href="DeleteService.php?q=<?php echo $row['slno'];?>">Delete</a></center></td>
 
                 </tr>
             <?php
