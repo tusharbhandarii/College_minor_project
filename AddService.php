@@ -163,7 +163,7 @@
     <!-- /.card-body -->
 
     <div class="card-footer">
-        <input type="submit" value="Submit" name="btn" class="btn btn-primary">
+        <center><input type="submit" value="Submit" name="btn" class="btn btn-primary"></center>
     </div>
 </form>
 
@@ -411,13 +411,13 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>SERVICE</th>
-                    <th>CATEGORY</th>
-                    <th>SUBCATEGORY</th>
-                    <th>DESCRIPTION</th>
-                    <th>PRICE</th>
-                    <th>DURATION</th>
-                    <th>IMAGE</th>
+                    <th>Service</th>
+                    <th>Category</th>
+                    <th>Subcategory</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Duration</th>
+                    <th>Image</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -437,7 +437,7 @@
                         <td><?php echo $row['duration'];?></td>
                         <td><?php echo $row['image'];?></td>
                         <td><center><a class="btn btn-primary" href="EditService.php?q=<?php echo $row['slno'];?>">edit</a></center></td>
-                        <td><center><a class="btn btn-primary" href="DeleteService.php?q=<?php echo $row['slno'];?>">delete</a></center></td>
+                        <td><center><a class="btn btn-danger" href="DeleteService.php?q=<?php echo $row['slno'];?>">delete</a></center></td>
 
                 </tr>
             <?php

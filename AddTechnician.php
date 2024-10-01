@@ -417,8 +417,6 @@
                     <th>Email</th>
                     <th>Image</th>
                     <th>Specialize</th>
-                    <th></th>
-                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -443,8 +441,8 @@
                         <td><?php echo $row['email'];?></td>
                         <td><?php echo $row['image'];?></td>
                         <td><?php echo $row['specialize'];?></td>
-                        <td><a class="btn btn-primary" href="EditTechnician.php?q=<?php echo $row['slno'];?>">edit</a></td>
-                        <td><a class="btn btn-primary" href="DeleteTechnician.php?q=<?php echo $row['slno'];?>">delete</a></td>
+                        <td><center><a class="btn btn-primary" href="EditTechnician.php?q=<?php echo $row['slno'];?>">edit</a></center></td>
+                        <td><center><a class="btn btn-danger" href="DeleteTechnician.php?q=<?php echo $row['slno'];?>">delete</a></center></td>
 
                 </tr>
             <?php
