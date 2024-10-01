@@ -14,6 +14,25 @@
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- stylesheet for validation  -->
+  <style>
+      /* Input valid and invalid states */
+      input.is-invalid {
+          border-color: red;
+      }
+
+      input.is-valid {
+          border-color: green;
+      }
+
+      /* Error message styling */
+      .error-message {
+          color: red;
+          font-size: 0.9em;
+          margin-top: 5px;
+      }
+   </style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -60,89 +79,95 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="POST" enctype="multipart/form-data">
-                  <div class="card-body">
+              <form method="POST" enctype="multipart/form-data" id="serviceForm">
+    <div class="card-body">
 
+        <!-- Service Name -->
+        <div class="form-group">
+            <label for="service">Service Name</label>
+            <input type="text" class="form-control" id="service" placeholder="Enter name" name="service">
+            <span class="error-message" id="serviceError"></span>
+        </div>                  
 
+        <!-- Category -->
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name="category" onchange="fetchSubcategories()">
+                <option value="">Select Category</option>
+                <?php
+                    // Connect to the database
+                    $con = mysqli_connect("localhost", "root", "", "demoproject");
+                    if(!$con) {
+                        echo "Error in connection";
+                    }
 
-                    <!-- service  -->
-                <div class="form-group">
-                    <label for="exampleInputname">SERVICE NAME</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Service Name" name="service">
-                </div>                  
-                    <!-- category  -->
-<!-- Category -->
-<div class="form-group">
-      <label for="category">CATEGORY</label>
-      <select class="form-control" id="category" name="category" onchange="fetchSubcategories()">
-        <option value="">Select Category</option>
-        <?php
-          // Connect to the database
-          $con = mysqli_connect("localhost", "root", "", "demoproject");
-          if(!$con) {
-              echo "Error in connection";
-          }
+                    // Fetch categories from the database
+                    $selectquery = "SELECT * FROM category";
+                    $res = mysqli_query($con, $selectquery);
+                    while($row = mysqli_fetch_assoc($res)) {
+                ?>
+                    <option value="<?php echo htmlspecialchars($row['categoryname']); ?>"><?php echo htmlspecialchars($row['categoryname']); ?></option>
+                <?php
+                    }
+                ?>
+            </select>
+            <span class="error-message" id="categoryError"></span>
+        </div>
 
-          // Fetch categories from the database
-          $selectquery = "SELECT * FROM category";
-          $res = mysqli_query($con, $selectquery);
-          while($row = mysqli_fetch_assoc($res)) {
-        ?>
-            <option value="<?php echo $row['categoryname']; ?>"><?php echo $row['categoryname']; ?></option>
-        <?php
-          }
-        ?>
-      </select>
+        <!-- Subcategory -->
+        <div class="form-group">
+            <label for="subcategory">Subcategory</label>
+            <select class="form-control" id="subcategory" name="subcategory">
+                <option value="">Select Subcategory</option>
+            </select>
+            <span class="error-message" id="subcategoryError"></span>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" placeholder="Enter description" name="description">
+            <span class="error-message" id="descriptionError"></span>
+        </div> 
+
+        <!-- Price -->
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" id="price" placeholder="Enter price" name="price">
+            <span class="error-message" id="priceError"></span>
+        </div>  
+
+        <!-- Duration -->
+        <div class="form-group">
+            <label for="duration">Duration</label>
+            <input type="text" class="form-control" id="duration" placeholder="Enter duration" name="duration">
+            <span class="error-message" id="durationError"></span>
+        </div>
+
+        <!-- Image -->
+        <div class="form-group">
+            <label for="image">Image</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    <input name="image" type="file" class="custom-file-input" id="image">
+                    <label class="custom-file-label" for="image">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                    <span class="input-group-text">Upload</span>
+                </div>
+            </div>
+            <span class="error-message" id="imageError"></span>
+        </div>   
+
     </div>
+    <!-- /.card-body -->
 
-    <!-- Subcategory -->
-    <div class="form-group">
-      <label for="subcategory">SUBCATEGORY</label>
-      <select class="form-control" id="subcategory" name="subcategory">
-        <option value="">Select Subcategory</option>
-      </select>
+    <div class="card-footer">
+        <input type="submit" value="Submit" name="btn" class="btn btn-primary">
     </div>
-                 <!-- description  -->
-                <div class="form-group">
-                    <label for="exampleInputname">DESCRIPTION</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Description" name="description">
-                </div>   
-                 <!-- price  -->
-                <div class="form-group">
-                    <label for="exampleInputname">PRICE</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Price" name="price">
-                </div>   
-                 <!-- duration  -->
-                <div class="form-group">
-                    <label for="exampleInputname">DURATION</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Duration" name="duration">
-                </div>
-                <!-- image  -->
-                <div class="form-group">
-                      <label for="exampleInputFile">IMAGE</label>
-                      <div class="input-group">
-                          <div class="custom-file">
-                              <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
-                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <span class="input-group-text">Upload</span>
-                            </div>
-                        </div>
-                </div>   
-                    
+</form>
 
-
-
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <input type="submit" value="submit" onclick="return check()" name="btn" class="btn btn-primary">
-                </div>
-                
-              </form>
-
+<!-- fetchSubcategories  -->
 <script>
   function fetchSubcategories() {
     var category = document.getElementById('category').value;
@@ -159,6 +184,129 @@
     };
     xhr.send('category=' + category);
   }
+</script>
+
+<!-- valiadtion  -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('serviceForm');
+
+    form.addEventListener('submit', function (e) {
+        let valid = true;
+
+        // Get form elements
+        const nameInput = document.getElementById('service');
+        const categorySelect = document.getElementById('category');
+        const subcategorySelect = document.getElementById('subcategory');
+        const descInput = document.getElementById('description');
+        const priceInput = document.getElementById('price');
+        const durationInput = document.getElementById('duration');
+        const imageInput = document.getElementById('image');
+
+        // Clear previous error messages
+        clearErrors();
+
+        // Validate Service Name
+        const namePattern = /^[a-zA-Z\s]+$/;
+        if (nameInput.value.trim() === "") {
+            showError(nameInput, 'Service Name is required', 'serviceError');
+            valid = false;
+        } else if (!namePattern.test(nameInput.value.trim())) {
+            showError(nameInput, 'Service Name must contain only letters and spaces', 'serviceError');
+            valid = false;
+        } else {
+            markValid(nameInput);
+        }
+
+        // Validate Category
+        if (categorySelect.value === "") {
+            showError(categorySelect, 'Please select a category', 'categoryError');
+            valid = false;
+        } else {
+            markValid(categorySelect);
+        }
+
+        // Validate Subcategory
+        if (subcategorySelect.value === "") {
+            showError(subcategorySelect, 'Please select a subcategory', 'subcategoryError');
+            valid = false;
+        } else {
+            markValid(subcategorySelect);
+        }
+
+        // Validate Description
+        if (descInput.value.trim() === "") {
+            showError(descInput, 'Description is required', 'descriptionError');
+            valid = false;
+        } else {
+            markValid(descInput);
+        }
+
+        // Validate Price
+        const pricePattern = /^\d+(\.\d{1,2})?$/; // Allows integers and decimals up to 2 places
+        if (priceInput.value.trim() === "") {
+            showError(priceInput, 'Price is required', 'priceError');
+            valid = false;
+        } else if (!pricePattern.test(priceInput.value.trim())) {
+            showError(priceInput, 'Invalid price format', 'priceError');
+            valid = false;
+        } else {
+            markValid(priceInput);
+        }
+
+        // Validate Duration
+        if (durationInput.value.trim() === "") {
+            showError(durationInput, 'Duration is required', 'durationError');
+            valid = false;
+        } else {
+            markValid(durationInput);
+        }
+
+        // Validate Image Upload
+        const allowedExtensions = ['image/jpeg', 'image/png', 'image/gif'];
+        if (imageInput.files.length === 0) {
+            showError(imageInput, 'Image file is required', 'imageError');
+            valid = false;
+        } else {
+            const fileType = imageInput.files[0].type;
+            if (!allowedExtensions.includes(fileType)) {
+                showError(imageInput, 'Only JPEG, PNG, or GIF files are allowed', 'imageError');
+                valid = false;
+            } else {
+                markValid(imageInput);
+            }
+        }
+
+        // If the form is invalid, prevent submission
+        if (!valid) {
+            e.preventDefault();
+        }
+    });
+
+    // Helper functions for showing and clearing errors
+    function showError(input, message, errorElementId) {
+        input.classList.add('is-invalid');
+        const errorElement = document.getElementById(errorElementId);
+        if (errorElement) {
+            errorElement.innerText = message;
+        }
+    }
+
+    function markValid(input) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+    }
+
+    function clearErrors() {
+        const errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(el => el.innerText = '');
+
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.classList.remove('is-invalid', 'is-valid');
+        });
+    }
+});
 </script>
 
               <!-- fetching image  -->
