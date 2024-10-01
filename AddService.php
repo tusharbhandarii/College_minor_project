@@ -71,43 +71,37 @@
                     <input type="text" class="form-control" id="exampleInputname" placeholder="Service Name" name="service">
                 </div>                  
                     <!-- category  -->
-                <div class="form-group">
-                    <label for="exampleInputname">CATEGORY</label>
-                    <select class="form-control" id="exampleInputname" name="category" >
-                    <?php
-                        $con=mysqli_connect("localhost","root","","demoproject");
-                        if(!$con)
-                        {
-                            echo "error in connection";
-                        }
-                        $selectquery="select * from service ";
-                        $res=mysqli_query($con,$selectquery);
-                        while($row=mysqli_fetch_assoc($res))
-                        {
-                    ?>
-                        <option value="<?php echo $row['category'] ?>" ><?php echo $row['category']?></option>
-                    <?php
-                        }
-                    ?>
-                    </select>
-                </div>
-                    <!-- subcategory  -->
-                <div class="form-group">
-                    <label for="exampleInputname">SUBCATEGORY</label>
-                    <select class="form-control" id="exampleInputname" name="subcategory" >
-                    <?php
-                    
-                        $selectquery="select * from subcategory ";
-                        $res=mysqli_query($con,$selectquery);
-                        while($row=mysqli_fetch_assoc($res))
-                        {
-                    ?>
-                        <option value="<?php echo $row['subcategory'] ?>" ><?php echo $row['subcategory']?></option>
-                    <?php
-                        }
-                    ?>
-                    </select>
-                </div>
+<!-- Category -->
+<div class="form-group">
+      <label for="category">CATEGORY</label>
+      <select class="form-control" id="category" name="category" onchange="fetchSubcategories()">
+        <option value="">Select Category</option>
+        <?php
+          // Connect to the database
+          $con = mysqli_connect("localhost", "root", "", "demoproject");
+          if(!$con) {
+              echo "Error in connection";
+          }
+
+          // Fetch categories from the database
+          $selectquery = "SELECT * FROM category";
+          $res = mysqli_query($con, $selectquery);
+          while($row = mysqli_fetch_assoc($res)) {
+        ?>
+            <option value="<?php echo $row['categoryname']; ?>"><?php echo $row['categoryname']; ?></option>
+        <?php
+          }
+        ?>
+      </select>
+    </div>
+
+    <!-- Subcategory -->
+    <div class="form-group">
+      <label for="subcategory">SUBCATEGORY</label>
+      <select class="form-control" id="subcategory" name="subcategory">
+        <option value="">Select Subcategory</option>
+      </select>
+    </div>
                  <!-- description  -->
                 <div class="form-group">
                     <label for="exampleInputname">DESCRIPTION</label>
@@ -148,6 +142,25 @@
                 </div>
                 
               </form>
+
+<script>
+  function fetchSubcategories() {
+    var category = document.getElementById('category').value;
+
+    // Make AJAX call to fetch subcategories
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'fetch_subcategories.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        // Populate the subcategory dropdown with the response
+        document.getElementById('subcategory').innerHTML = this.responseText;
+      }
+    };
+    xhr.send('category=' + category);
+  }
+</script>
+
               <!-- fetching image  -->
               <?php
                 $con = mysqli_connect('localhost','root','','demoproject');
