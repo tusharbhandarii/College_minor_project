@@ -255,8 +255,12 @@
         }
 
         // Validate Duration
+        const durationPattern = /^\d+$/; // Allows only integers
         if (durationInput.value.trim() === "") {
             showError(durationInput, 'Duration is required', 'durationError');
+            valid = false;
+        } else if (!durationPattern.test(durationInput.value.trim())) {
+            showError(durationInput, 'Invalid duration format', 'durationError');
             valid = false;
         } else {
             markValid(durationInput);
@@ -350,14 +354,16 @@
                           }
                       }
 
-                            $service=$_POST['service'];
+                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                              $service = ucwords(strtolower($_POST["service"]));
+                            }
                             $category = mysqli_real_escape_string($con, $_POST['category']);
                             $subcategory = mysqli_real_escape_string($con, $_POST['subcategory']);
                             $description=$_POST['description'];
                             $price=$_POST['price'];
                             $duration=$_POST['duration'];
                       
-                      $insertQuery = "INSERT INTO service VALUES('','$category','$service','$subcategory','$description','$price','$duration','$image_name')";
+                      $insertQuery = "INSERT INTO service VALUES('','$service','$category','$subcategory','$description','$price','$duration','$image_name')";
                       if(mysqli_query($con,$insertQuery))
                       {
                         echo "<script>alert('data inserted ');window.location.href='AddService.php';</script>";
