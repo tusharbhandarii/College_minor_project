@@ -14,6 +14,25 @@
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+   <!-- stylesheet for validation  -->
+   <style>
+      /* Input valid and invalid states */
+      input.is-invalid {
+          border-color: red;
+      }
+
+      input.is-valid {
+          border-color: green;
+      }
+
+      /* Error message styling */
+      .error-message {
+          color: red;
+          font-size: 0.9em;
+          margin-top: 5px;
+      }
+   </style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -71,58 +90,329 @@
                         $selectquery = "select * from technician where slno='$q' ";
                         $res = mysqli_query($con,$selectquery);
                         $row = mysqli_fetch_assoc($res); 
+                    }
             ?>
 
                         <!-- form start -->
 
-            <form method="POST" enctype="multipart/form-data">
+            <form id="technicianForm" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
+
+                  <!-- Technician Name -->
                   <div class="form-group">
-                    <label for="exampleInputname">EDIT TECHNICIAN NAME</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['name'];?>" name="name">  
+                    <label for="exampleInputname">Edit Technician Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="<?php echo $row['name'];?>" name="name">  
+                    <div class="error-message" id="nameError"></div>
                   </div>
+                  <!-- Mobile Number -->
                   <div class="form-group">
-                    <label for="exampleInputname">EDIT MOBILE NUMBER</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['phno'];?>" name="phno">
+                    <label for="exampleInputname">Edit Mobile Number</label>
+                    <input type="text" class="form-control" id="phno" placeholder="<?php echo $row['phno'];?>" name="phno">
+                    <div class="error-message" id="phnoError"></div>
                   </div>
+                  <!-- Address -->
                   <div class="form-group">
-                    <label for="exampleInputname">EDIT ADDRESS</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['address'];?>" name="address">
+                    <label for="exampleInputname">Edit Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="<?php echo $row['address'];?>" name="address">
                   </div> 
+                  <!-- Email address -->
                   <div class="form-group">
-                    <label for="exampleInputname">EDIT EMAIL</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['email'];?>" name="email">
+                    <label for="exampleInputname">Edit Email address</label>
+                    <input type="text" class="form-control" id="email" placeholder="<?php echo $row['email'];?>" name="email">
+                    <div class="error-message" id="emailError"></div>
                   </div>
+                  <!-- Specialization -->
                   <div class="form-group">
-                    <label for="exampleInputname">EDIT SPECIALIZATION</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="<?php echo $row['specialize'];?>" name="specilize">
-                  </div>                 
+                    <label for="exampleInputname">Edit Specialization</label>
+                    <input type="text" class="form-control" id="specialize" placeholder="<?php echo $row['specialize'];?>" name="specialize">
+                    <div class="error-message" id="specializeError"></div>
+                  </div>  
+                  <!-- image -->
+                  <div class="form-group">
+                      <label for="exampleInputFile">Edit File input</label>
+                      <div class="input-group">
+                          <div class="custom-file">
+                              <input name="image" type="file" class="custom-file-input" id="image">
+                              <label class="custom-file-label" for="image"><?php echo $row['image'];?></label>
+                          </div>
+                          <div class="input-group-append">
+                              <span class="input-group-text">Upload</span>
+                          </div>
+                      </div>
+                      <div class="error-message" id="imageError"></div>
+                  </div>               
                 </div>
+                
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <input type="submit" value="edit" onclick="return check()" name="btn" class="btn btn-primary">
+                  <center><input type="submit" value="edit" name="btn" class="btn btn-primary"></center>
                 </div>
                 
               </form>
+              
+              <!-- script file  -->
+<!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const form = document.getElementById('technicianForm');
+
+          form.addEventListener('submit', function (e) {
+              let valid = true;
+
+              // Get form elements
+              const nameInput = document.getElementById('name');
+              const phnoInput = document.getElementById('phno');
+              const addressInput = document.getElementById('address');
+              const emailInput = document.getElementById('email');
+              const specializeInput = document.getElementById('specialize');
+              const imageInput = document.getElementById('image');
+
+              // Clear previous error messages
+              clearErrors();
+
+              // Validate Name
+              const namePattern = /^[a-zA-Z\s]+$/;
+              if (!namePattern.test(nameInput.value.trim())) {
+                  showError(nameInput, 'Name must contain only letters and spaces', 'nameError');
+                  valid = false;
+              } else {
+                  markValid(nameInput);
+              }
+
+              // Validate Mobile Number (10 digits)
+              const phonePattern = /^[0-9]{10}$/;
+              if (!phonePattern.test(phnoInput.value.trim())) {
+                  showError(phnoInput, 'Invalid phone number (must be 10 digits)', 'phnoError');
+                  valid = false;
+              } else {
+                  markValid(phnoInput);
+              }
+
+              // Validate Email
+              const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+              if (!emailPattern.test(emailInput.value.trim())) {
+                  showError(emailInput, 'Invalid email address', 'emailError');
+                  valid = false;
+              } else {
+                  markValid(emailInput);
+              }
+
+              // Validate Specialization
+              const specializePattern = /^[a-zA-Z\s]+$/;
+              if (!specializePattern.test(specializeInput.value.trim())) {
+                  showError(specializeInput, 'Specialization must contain only letters and spaces', 'specializeError');
+                  valid = false;
+              } else {
+                  markValid(specializeInput);
+              }
+
+              // Validate Image Upload
+                  const allowedExtensions = ['image/jpeg', 'image/png', 'image/gif'];
+                  const fileType = imageInput.files[0].type;
+                  if (!allowedExtensions.includes(fileType)) {
+                      showError(imageInput, 'Only JPEG, PNG, or GIF files are allowed', 'imageError');
+                      valid = false;
+                  } else {
+                      markValid(imageInput);
+                  }
+
+              // Prevent form submission if invalid
+              if (!valid) {
+                  e.preventDefault();
+              }
+          });
+
+          // Helper functions for showing and clearing errors
+          function showError(input, message, errorElementId) {
+              input.classList.add('is-invalid');
+              document.getElementById(errorElementId).innerText = message;
+          }
+
+          function markValid(input) {
+              input.classList.remove('is-invalid');
+              input.classList.add('is-valid');
+          }
+
+          function markInvalid(input) {
+              input.classList.remove('is-valid');
+              input.classList.add('is-invalid');
+          }
+
+          function clearErrors() {
+              const errorElements = document.querySelectorAll('.error-message');
+              errorElements.forEach(el => el.innerText = '');
+
+              const inputs = document.querySelectorAll('input');
+              inputs.forEach(input => {
+                  input.classList.remove('is-invalid', 'is-valid');
+              });
+          }
+      });
+</script> -->
+<script>
+     document.addEventListener('DOMContentLoaded', function () {
+     const form = document.getElementById('technicianForm');
+
+    form.addEventListener('submit', function (e) {
+        let valid = true;
+
+        // Get form elements
+        const nameInput = document.getElementById('technicianName');
+        const phnoInput = document.getElementById('technicianPhno');
+        const addressInput = document.getElementById('technicianAddress');
+        const emailInput = document.getElementById('technicianEmail');
+        const specializeInput = document.getElementById('technicianSpecialize');
+        const imageInput = document.getElementById('technicianImage');
+
+        // Clear previous error messages
+        clearErrors();
+
+        // Validate fields only if they have been changed
+        if (nameInput.value !== nameInput.getAttribute('data-original-value')) {
+            const namePattern = /^[a-zA-Z\s]+$/;
+            if (!namePattern.test(nameInput.value.trim())) {
+                showError(nameInput, 'Name must contain only letters and spaces', 'nameError');
+                valid = false;
+            } else {
+                markValid(nameInput);
+            }
+        }
+
+        if (phnoInput.value !== phnoInput.getAttribute('data-original-value')) {
+            const phonePattern = /^[0-9]{10}$/;
+            if (!phonePattern.test(phnoInput.value.trim())) {
+                showError(phnoInput, 'Invalid phone number (must be 10 digits)', 'phnoError');
+                valid = false;
+            } else {
+                markValid(phnoInput);
+            }
+        }
+
+        if (emailInput.value !== emailInput.getAttribute('data-original-value')) {
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailPattern.test(emailInput.value.trim())) {
+                showError(emailInput, 'Invalid email address', 'emailError');
+                valid = false;
+            } else {
+                markValid(emailInput);
+            }
+        }
+
+        if (specializeInput.value !== specializeInput.getAttribute('data-original-value')) {
+            const specializePattern = /^[a-zA-Z\s]+$/;
+            if (!specializePattern.test(specializeInput.value.trim())) {
+                showError(specializeInput, 'Specialization must contain only letters and spaces', 'specializeError');
+                valid = false;
+            } else {
+                markValid(specializeInput);
+            }
+        }
+
+        if (imageInput.files.length > 0) {
+            const allowedExtensions = ['image/jpeg', 'image/png', 'image/gif'];
+            const fileType = imageInput.files[0].type;
+            if (!allowedExtensions.includes(fileType)) {
+                showError(imageInput, 'Only JPEG, PNG, or GIF files are allowed', 'imageError');
+                valid = false;
+            } else {
+                markValid(imageInput);
+            }
+        }
+
+        // Prevent form submission if invalid
+        if (!valid) {
+            e.preventDefault();
+        }
+    });
+
+    // Helper functions for showing and clearing errors
+    function showError(input, message, errorElementId) {
+        input.classList.add('is-invalid');
+        document.getElementById(errorElementId).innerText = message;
+    }
+
+    function markValid(input) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+    }
+
+    function clearErrors() {
+        const errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(el => el.innerText = '');
+
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.classList.remove('is-invalid', 'is-valid');
+        });
+    }
+});
+
+</script>
+
+
+            <!-- fetching image  -->
             <?php
-                        if(isset($_POST['btn'])){
-                            $name=$_POST['name'];
-                            $editquery = "UPDATE category SET categoryname='$name' WHERE catid='$q' ";
-                            if(mysqli_query($con, $editquery))
-                            {
-                                echo "<script>
-                                alert('data updated !! ');window.location.href='AddCategory.php';</script>";
-                            }
-                            else
-                            {
-                            echo "<script>
-                            alert('data is not updated !! ');window.location.href='AddCategory.php';</script>";
-                            }
-                        }
+                $con = mysqli_connect('localhost','root','','demoproject');
+                if(!$con){
+                  echo "Error in connection";
+                }else{
+                  function getExtension($str) 
+                  {
+                      $i = strrpos($str,".");
+                      if (!$i) { return ""; }
+                      $l = strlen($str) - $i;
+                      $ext = substr($str,$i+1,$l);
+                      return $ext;
+                  }
+                  $errors=0;
+                  if(isset($_POST['btn'])) 
+                  {
+                     $image=$_FILES['image']['name'];
+                     if ($image) 
+                     {
+                       $filename = stripslashes($_FILES['image']['name']);
+                        $extension = getExtension($filename);
+                       $extension = strtolower($extension);
+                          if (($extension != "jpg") && ($extension != "jpeg") && ($extension != "png") && ($extension != "gif") && ($extension != "bmp")) 
+                       {
+                         echo '<h1>Unknown extension!</h1>';
+                         $errors=1;
+                       }
+                       else
+                       {
+                              $image_name=time().'.'.$extension;
+                              $newname="uploadimage/technician/".$image_name;        
+                              $copied = copy($_FILES['image']['tmp_name'], $newname);
+                              if (!$copied) 
+                              {
+                                  echo '<h1>Copy unsuccessfull!</h1>';
+                                  $errors=1;
+                              }
+                          }
+                      }
+
+                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $name = ucwords(strtolower($_POST["name"]));
+                        // Save the formatted to the database or perform other operations
+                      }
+                      $phno = $_POST['phno'];
+                      $address = $_POST['address'];
+                      $email = $_POST['email'];
+                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $specialize = ucwords(strtolower($_POST["specialize"]));
+                      }
+
+                      // updating the data into the database
+                      $editquery = "UPDATE technician SET name='$name',phno='$phno',address='$address',email='$email',image='$image_name', specialize='$specialize' WHERE slno='$q' ";
+                      if(mysqli_query($con,$editquery))
+                      {
+                        echo "<script>alert('data inserted ');window.location.href='AddTechnician.php';</script>";
+                      }else{
+                        echo "<script>alert('data is not inserted ');window.location.href='AddTechnician.php';</script>";
+                      }
                     }
-                        
-            ?> 
+                  }
+              ?>
   
             <!-- /.card -->
 
