@@ -160,8 +160,8 @@
                 {
               ?>
                         <td><?php echo $row['categoryname'];?></td>
-                        <td><center><a class="btn btn-primary" href="EditCategory.php?q=<?php echo $row['catid'];?>">edit</a></center></td>
-                        <td><center><a class="btn btn-danger" href="DeleteCategory.php?q=<?php echo $row['catid'];?>">delete</a></center></td>
+                        <td><center><a class="btn btn-primary" href="EditCategory.php?q=<?php echo $row['catid'];?>">Edit</a></center></td>
+                        <td><center><a class="btn btn-danger" href="DeleteCategory.php?q=<?php echo $row['catid'];?>">Delete</a></center></td>
 
                 </tr>
             <?php
