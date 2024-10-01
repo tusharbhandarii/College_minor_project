@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | General Form Elements</title>
+  <title>Add Category</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,6 +14,26 @@
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  
+  <!-- Stylesheet for Validation -->
+  <style>
+      /* Input valid and invalid states */
+      input.is-invalid {
+          border-color: red;
+      }
+
+      input.is-valid {
+          border-color: green;
+      }
+
+      /* Error message styling */
+      .error-message {
+          color: red;
+          font-size: 0.9em;
+          margin-top: 5px;
+      }
+   </style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -23,10 +43,7 @@
 
   <!-- Main Sidebar Container -->
   <?php include('sidebar.php')?>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  
+  <!-- /.sidebar -->
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -35,12 +52,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>General Form</h1>
+            <h1>Add Category</h1>
           </div>
           <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">General Form</li>
+              <li class="breadcrumb-item active">Add Category</li>
             </ol>
           </div>
         </div>
@@ -51,109 +68,87 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <!-- left column -->
+          <!-- Left column -->
           <div class="col-md-12">
-            <!-- general form elements -->
+            <!-- General form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Quick Example</h3>
+                <h3 class="card-title">Add New Category</h3>
               </div>
               <!-- /.card-header -->
-              <!-- form start -->
-              <form method="POST" enctype="multipart/form-data">
+              <!-- Form Start -->
+              <form method="POST" id="categoryForm">
                 <div class="card-body">
+                  <!-- Category Name -->
                   <div class="form-group">
-                    <label for="exampleInputname">CATEGORY NAME</label>
-                    <input type="text" class="form-control" id="exampleInputname" placeholder="Enter Name" name="name">
+                    <label for="categoryName">CATEGORY NAME</label>
+                    <input type="text" class="form-control" id="categoryName" placeholder="Enter Category Name" name="name">
+                    <span class="error-message" id="categoryNameError"></span>
                   </div>                  
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <input type="submit" value="submit" onclick="return check()" name="btn" class="btn btn-primary">
+                  <center><input type="submit" value="Submit" name="btn" class="btn btn-primary"></center>
                 </div>
-                
               </form>
-            <?php
-                $con = mysqli_connect("localhost", "root","","demoproject");
-                    if(!$con){
-                        echo "error in connection";
-                    }else{
-                        if(isset($_POST['btn'])){
-                            $name=$_POST['name'];
-                            $insertquery = "INSERT INTO category VALUES('','$name')";
-                            if(mysqli_query($con, $insertquery))
-                            {
-                                echo "<script>
-                                alert('data inserted ');window.location.href='AddCategory.php';</script>";
-                            }
-                            else
-                            {
-                            echo "<script>
-                            alert('data is not inserted ');window.location.href='AddCategory.php';</script>";
-                            }
-                        }
-                    }
-                        
-            ?> 
-  
+
+              <!-- PHP Script for Inserting Category -->
+              <?php
+                  // Establish database connection
+                  $con = mysqli_connect("localhost", "root", "", "demoproject");
+                  if(!$con){
+                      echo "Error in connection";
+                  } else {
+                      if(isset($_POST['btn'])){
+                          // Retrieve and sanitize user input
+                          $name = trim($_POST['name']);
+
+                          // Convert the category name to uppercase
+                          $name_upper = strtoupper($name);
+
+                          // Use prepared statements to prevent SQL injection
+                          $stmt = $con->prepare("INSERT INTO category (categoryname) VALUES (?)");
+                          $stmt->bind_param("s", $name_upper);
+
+                          if($stmt->execute()){
+                              echo "<script>
+                              alert('Data inserted successfully!');
+                              window.location.href='AddCategory.php';
+                              </script>";
+                          }
+                          else {
+                              echo "<script>
+                              alert('Data insertion failed!');
+                              window.location.href='AddCategory.php';
+                              </script>";
+                          }
+
+                          $stmt->close();
+                      }
+                  }
+              ?> 
             <!-- /.card -->
-
-
           </div>
           <!--/.col (left) -->
-          <!-- right column -->
+
+          <!-- Right column -->
           <div class="col-md-12">
-            <!-- Form Element sizes -->
-            
-            <!-- /.card -->
-
-            
-            <!-- /.card -->
-
-            <!-- general form elements disabled -->
-            
-            <!-- /.card -->
-            <!-- general form elements disabled -->
-            
-            <!-- /.card -->
-          </div>
-          <!--/.col (right) -->
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-           
-            <!-- /.card -->
-
+            <!-- DataTable for Categories -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
+                <h3 class="card-title">Category List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>SL NO</th>
-                    <th>CATEGORY NAME</th>
-                    <th>EDIT INFO</th>
-                    <th>DELETE INFO</th>
+                    <th>Category Name</th>
                   </tr>
                   </thead>
                   <tbody>
-                  
-
-
-
-                  
-                 
-                                <?php
+            <?php
                 $con=mysqli_connect("localhost","root","","demoproject");
                 if(!$con)
                 {
@@ -163,25 +158,16 @@
                 $res=mysqli_query($con,$selectquery);
                 while($row=mysqli_fetch_assoc($res))
                 {
-                    ?>
-                    <tr> <td><?php echo $row['catid'];?></td>
+              ?>
                         <td><?php echo $row['categoryname'];?></td>
                         <td><center><a class="btn btn-primary" href="EditCategory.php?q=<?php echo $row['catid'];?>">edit</a></center></td>
-                        <td><center><a class="btn btn-primary" href="DeleteCategory.php?q=<?php echo $row['catid'];?>">delete</a></center></td>
+                        <td><center><a class="btn btn-danger" href="DeleteCategory.php?q=<?php echo $row['catid'];?>">delete</a></center></td>
 
                 </tr>
-                <?php
+            <?php
                 }
-                ?>
-                
-                 
-             
-                
-               
-              
-                  
+            ?>
                   </tbody>
-                  
                 </table>
               </div>
               <!-- /.card-body -->
@@ -191,13 +177,14 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
+      </div><!-- /.container-fluid -->
     </section>
 
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+  <!-- Footer -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.2.0
@@ -223,6 +210,7 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- DataTables & Plugins -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -235,7 +223,8 @@
 <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<!-- Page specific script -->
+
+<!-- Page Specific Scripts -->
 <script>
 $(function () {
   bsCustomFileInput.init();
@@ -244,18 +233,71 @@ $(function () {
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "responsive": true, 
+      "lengthChange": false, 
+      "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
+  });
+</script>
+
+<!-- JavaScript for Form Validation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('categoryForm');
+
+    form.addEventListener('submit', function (e) {
+        let valid = true;
+
+        // Get form elements
+        const categoryNameInput = document.getElementById('categoryName');
+
+        // Clear previous error messages
+        clearErrors();
+
+        // Validate Category Name
+        const namePattern = /^[A-Za-z\s]+$/;
+        const nameValue = categoryNameInput.value.trim();
+
+        if (nameValue === "") {
+            showError(categoryNameInput, 'Category Name is required', 'categoryNameError');
+            valid = false;
+        } else if (!namePattern.test(nameValue)) {
+            showError(categoryNameInput, 'Category Name must contain only letters and spaces', 'categoryNameError');
+            valid = false;
+        } else {
+            markValid(categoryNameInput);
+        }
+
+        // If the form is invalid, prevent submission
+        if (!valid) {
+            e.preventDefault();
+        }
     });
+
+    // Helper functions for showing and clearing errors
+    function showError(input, message, errorElementId) {
+        input.classList.add('is-invalid');
+        const errorElement = document.getElementById(errorElementId);
+        if (errorElement) {
+            errorElement.innerText = message;
+        }
+    }
+
+    function markValid(input) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+    }
+
+    function clearErrors() {
+        const errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(el => el.innerText = '');
+
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.classList.remove('is-invalid', 'is-valid');
+        });
+    }
   });
 </script>
 </body>
