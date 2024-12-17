@@ -21,17 +21,34 @@
                     </a>
                 <?php
                 } else {
+                            // Database connection
+                            $con = mysqli_connect("localhost", "root", "", "demoproject");
+                            if (!$con) {
+                                echo "Error in connection";
+                            } else {
+                                // Correct the query to avoid space issues
+                                $email = mysqli_real_escape_string($con, $_SESSION['un']);
+                                $selectquery = "SELECT name FROM customer WHERE email = '$email'";
+                                $res = mysqli_query($con, $selectquery);
+                    
+                                if ($res && mysqli_num_rows($res) > 0) {
+                                    $row = mysqli_fetch_assoc($res); 
+                                    $name = $row['name'];
+                                } else {
+                                    $name = "Guest"; // Fallback in case the user is not found
+                                }
+                            }
                 ?>
-                    <div style="display: flex; align-items:center; gap:20px;">
-                        <span style="color: #fff;">
-                            Welcome, <?php echo $_SESSION['un']; ?>
-                        </span>
-                        <a href="login.php" class="text-white">
-                            <i class="bi bi-box-arrow-right"></i>
-                        </a>
-                    </div>
+                            <div style="display: flex; align-items: center; gap: 20px;">
+                                <span style="color: #fff;">
+                                    Welcome, <?php echo $name; ?>
+                                </span>
+                                <a href="logout.php" class="text-white">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                </a>
+                            </div>
                 <?php
-                }
+                        }
                 ?>
             </div>
         </div>
