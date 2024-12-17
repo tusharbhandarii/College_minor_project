@@ -54,12 +54,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>All Booking</h1>
+            <h1>All Registrations</h1>
           </div>
           <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">All Booking</li>
+              <li class="breadcrumb-item active">All Registrations</li>
             </ol>
           </div>
         </div>
@@ -113,21 +113,20 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Service List</h3>
+                <h3 class="card-title"> List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Booking Id</th>
-                    <th>Customer name</th>
-                    <th>Customer Id</th>
-                    <th>Service name</th>                             
-                    <th>Service Time</th>
-                    <th>Booking Time</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th>Customer Name</th>
+                    <th>Email</th>
+                    <th>Phone No</th>
+                    <th>City</th>                             
+                    <th>PIN</th>
+                    <th>Street</th>
+                    <th>Landmark</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -138,30 +137,19 @@
             if(!$con){
               echo "Error in connection";
             }
-                $selectquery="select * from booking ";
+                $selectquery="select * from customer ";
                 $res=mysqli_query($con,$selectquery);
         
                 while($row=mysqli_fetch_assoc($res))
                 {
             ?>
-                        <td><?php echo $row['bookingid'];?></td>
-                        <td><?php $cid= $row['customerid'];
-                         $selectquerycust="select * from customer where email='$cid' ";
-                         $rescust=mysqli_query($con,$selectquerycust);
-                         $rowcust=mysqli_fetch_assoc($rescust);
-                        echo $rowcust['name'];
-                        ?></td>
-                        <td><?php echo $row['customerid'];?></td>
-                        <td><?php $sid= $row['productid'];
-                         $selectqueryser="select * from service where slno='$sid' ";
-                         $resser=mysqli_query($con,$selectqueryser);
-                         $rowser=mysqli_fetch_assoc($resser);
-                        echo $rowser['servicename'];
-                        ?></td>
-                        <td><?php echo $row['datetime'];?></td>
-                        <td><?php echo $row['booktime'];?></td>
-                        <td><?php echo $row['status'];?></td>
-                        <td><center><a class="btn btn-primary" href="statusupdate.php?q=<?php echo $row['bookingid'];?>">Update</a></center></td>
+                        <td><?php echo $row['name'];?></td>
+                        <td><?php echo $row['email'];?></td>
+                        <td><?php echo $row['phno'];?></td>
+                        <td><?php echo $row['city'];?></td>
+                        <td><?php echo $row['pincode'];?></td>
+                        <td><?php echo $row['street'];?></td>
+                        <td><?php echo $row['landmark'];?></td>
                 </tr>
             <?php
                 }

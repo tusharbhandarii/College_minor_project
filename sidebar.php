@@ -35,7 +35,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="./AddAdmin.php" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="bi bi-person-circle"></i>
                   <p>Admin</p>
                 </a>
               </li>
@@ -55,7 +55,7 @@
               <p>
                 Components
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
+                <span class="badge badge-info right">3</span>
               </p>
             </a>
             <ul class="nav nav-treeview">

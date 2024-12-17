@@ -34,7 +34,7 @@
     <!-- header section strats -->
     <div class="hero_bg_box">
       <div class="img-box">
-        <img src="images/hero-bg.jpg" alt="">
+        <img src="images/hero-bg2.jpg" alt="">
       </div>
     </div>
 

@@ -89,7 +89,7 @@
     <!-- header section strats -->
     <div class="hero_bg_box">
       <div class="img-box">
-        <img src="images/hero-bg.jpg" alt="">
+        <img src="images/hero-bg2.jpg" alt="">
       </div>
     </div>
 
@@ -201,7 +201,9 @@
                             $editquery = "UPDATE customer SET phno='$phno',city='$city',pincode='$pincode',street='$street',landmark='$landmark' WHERE email='$custemail'";
                             mysqli_query($con, $editquery);
 
-                            $insertQuery = "INSERT INTO booking VALUES('','$custemail','$q','$datetime','pending') ";
+                      //      $insertQuery = "INSERT INTO booking VALUES('','$custemail','$q'," $row['servicename'] ",$servamount,'$datetime','Pending',NOW() ) ";
+                            $insertQuery = "INSERT INTO booking VALUES('', '$custemail', '$q', '" . $row['servicename'] . "', '" . $row['price'] . "', '$datetime', 'Pending', NOW())";
+
                             if(mysqli_query($con, $insertQuery))
                             {
                                 echo "<script>
