@@ -43,7 +43,7 @@
                                 <span style="color: #fff;">
                                     Welcome, <?php echo $name; ?>
                                 </span>
-                                <a href="logout.php" class="text-white">
+                                <a href="login.php" class="text-white">
                                     <i class="bi bi-box-arrow-right"></i>
                                 </a>
                             </div>
