@@ -7,10 +7,7 @@ if (empty($_SESSION['un'])) {
 }
 
 // Database connection
-$con = mysqli_connect("localhost", "root", "", "demoproject");
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+include 'db_connection.php';
 
 // Get user-specific orders
 $user = $_SESSION['un'];

@@ -156,10 +156,7 @@
     }
   </script>
         <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                    echo "Error in connection";
-                }else{
+                include 'db_connection.php';
                     if(isset($_POST['btn'])) 
                     {
                         $name=$_POST['name'];
@@ -179,8 +176,7 @@
                             "<script>alert('Register Unsuccessful ');window.location.href='index.php';</script>";
                         }
                     }
-                }
-        ?>
+          ?>
 
   <!-- end contact section -->
 

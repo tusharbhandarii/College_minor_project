@@ -72,99 +72,10 @@
           Our services
         </h2>
       </div>
-    <!-- <div class="row">
-      <?php
-                $con=mysqli_connect("localhost","root","","demoproject");
-                if(!$con)
-                {
-                    echo "error in connection";
-                }
-                $selectquery="select * from service ";
-                $res=mysqli_query($con,$selectquery);
-                while($row=mysqli_fetch_assoc($res))
-                {
-            ?>
-            <div class="col-md-4">
-              
-            <div class="box "> 
-            <div class="img-box"> 
-              <img src="../uploadimage/servicee/<?php echo $row['image'];?>" width="300px" height="300px">  
-            </div>
-                <div class="detail-box">
-                <h6>
-                <?php echo $row['servicename'];?>
-                </h6>
 
-                <b><h7>
-                Category : <?php echo $row['category'];?>
-                </h7><br>
-                
-                <h7>
-                Subcategory : <?php echo $row['subcategory'];?>
-                </h7><br><br>
-                </b>
-
-                <p>
-                <?php echo $row['description'];?>
-                </p>
-                <p>
-                   Rs <?php echo $row['price'];?>
-                </p>
-                
-                <a href="servicedetails.php?q=<?php echo $row['slno'];?>">
-                 Book Now
-                </a>
-                </div>
-            </div>
-            </div>
-
-            <?php
-                }
-            ?>
-      </div>
-    </div> -->
-  <!-- <div class="row">
-    <?php
-        $con = mysqli_connect("localhost", "root", "", "demoproject");
-        if (!$con) {
-            echo "error in connection";
-        }
-        
-        $selectquery = "SELECT * FROM service";
-        $res = mysqli_query($con, $selectquery);
-        
-        while ($row = mysqli_fetch_assoc($res)) {
-    ?>
-    <div class="col-md-4 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-img-top">
-                <img src="../uploadimage/servicee/<?php echo $row['image']; ?>" alt="<?php echo $row['servicename']; ?>" class="img-fluid" style="height: 200px; object-fit: cover;">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title"><?php echo $row['servicename']; ?></h5>
-                <p class="card-text">
-                    <strong>Category:</strong> <?php echo $row['category']; ?><br>
-                    <strong>Subcategory:</strong> <?php echo $row['subcategory']; ?>
-                </p>
-                <p class="text-muted"><?php echo substr($row['description'], 0, 100); ?>...</p>
-                <p class="text-primary fw-bold">Rs <?php echo $row['price']; ?></p>
-                <a href="servicedetails.php?q=<?php echo $row['slno']; ?>" class="btn btn-outline-primary btn-sm">View Details</a>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">Duration: <?php echo $row['duration']; ?> hours</small>
-            </div>
-        </div>
-    </div>
-    <?php
-        }
-    ?>
-</div> -->
 <div class="row">
     <?php
-        $con = mysqli_connect("localhost", "root", "", "demoproject");
-        if (!$con) {
-            echo "error in connection";
-        }
+        include 'db_connection.php';
         
         $selectquery = "SELECT * FROM service";
         $res = mysqli_query($con, $selectquery);

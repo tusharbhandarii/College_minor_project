@@ -133,10 +133,7 @@
                       
                  
             <?php
-            $con = mysqli_connect('localhost','root','','demoproject');
-            if(!$con){
-              echo "Error in connection";
-            }
+            include 'db_connection2.php';
                 $selectquery="select * from customer ";
                 $res=mysqli_query($con,$selectquery);
         

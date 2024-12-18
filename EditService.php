@@ -18,7 +18,8 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <?php include('navbar.php') ?>
+  <?php include('navbar.php');
+        include 'db_connection2.php'; ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -62,11 +63,6 @@
               
 
             <?php
-                $con = mysqli_connect("localhost", "root","","demoproject");
-                    if(!$con){
-                        echo "error in connection";
-                    }else{
-
                         $q = $_GET['q'];
                         $selectquery = "select * from service where slno='$q' ";
                         $res = mysqli_query($con,$selectquery);
@@ -88,11 +84,6 @@
                     <label for="exampleInputname">CATEGORY</label>
                     <select class="form-control" id="exampleInputname" name="category" >
                     <?php
-                        $con=mysqli_connect("localhost","root","","demoproject");
-                        if(!$con)
-                        {
-                            echo "error in connection";
-                        }
                         $selectquery="select * from category ";
                         $res=mysqli_query($con,$selectquery);
                         while($row=mysqli_fetch_assoc($res))
@@ -167,10 +158,6 @@
             </form>
 
             <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                  echo "Error in connection";
-                }else{
                   function getExtension($str) 
                   {
                       $i = strrpos($str,".");
@@ -228,15 +215,7 @@
                         // alert('data is not updated !! ');window.location.href='AddService.php';</script>";
                         }
                     }
-                  }
               ?>
-
-
-            <?php
-                        
-                        }
-                        
-            ?> 
   
             <!-- /.card -->
 

@@ -50,11 +50,7 @@
 
   <!-- contact section -->
   <?php
-        $con=mysqli_connect("localhost","root","","demoproject");
-            if(!$con)
-            {
-            echo "error in connection";
-            }
+        include 'db_connection.php';
     ?>
 
   <section class="contact_section layout_padding">

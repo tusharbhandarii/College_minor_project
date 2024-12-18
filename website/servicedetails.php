@@ -45,15 +45,11 @@
 
   <!-- about section -->
   <?php
-    $con = mysqli_connect("localhost", "root", "", "demoproject");
-    if (!$con) {
-        echo "Error in connection";
-    } else {
+    include 'db_connection.php';
         $q = $_GET['q'];
         $selectquery = "SELECT * FROM service WHERE slno = '$q'";
         $res = mysqli_query($con, $selectquery);
-        $row = mysqli_fetch_assoc($res);
-    }               
+        $row = mysqli_fetch_assoc($res);              
 ?>
 
 <section class="about_section layout_padding">

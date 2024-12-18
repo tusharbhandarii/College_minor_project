@@ -71,15 +71,11 @@
               <div class="inner">
                 <h3>
                 <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                    echo "Error in connection";
-                }else{
+                include 'db_connection2.php';
                        $querybok="select * from booking";
                         $resexist=mysqli_query($con,$querybok);
                         $rowcount=mysqli_num_rows($resexist);
-                        echo $rowcount;
-                }                  
+                        echo $rowcount;              
 ?>
                 </h3>
 
@@ -131,15 +127,10 @@
               <div class="inner">
                 <h3>
                 <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                    echo "Error in connection";
-                }else{
                        $querycusss="select * from customer";
                         $resexist=mysqli_query($con,$querycusss);
                         $rowcount=mysqli_num_rows($resexist);
-                        echo $rowcount;
-                }      
+                        echo $rowcount;    
                ?>
                 </h3>
 

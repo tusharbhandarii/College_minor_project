@@ -96,10 +96,7 @@
                 <option value="">Select Category</option>
                 <?php
                     // Connect to the database
-                    $con = mysqli_connect("localhost", "root", "", "demoproject");
-                    if(!$con) {
-                        echo "Error in connection";
-                    }
+                    include 'db_connection2.php';
 
                     // Fetch categories from the database
                     $selectquery = "SELECT * FROM category";
@@ -315,10 +312,6 @@
 
               <!-- fetching image  -->
               <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                  echo "Error in connection";
-                }else{
                   function getExtension($str) 
                   {
                       $i = strrpos($str,".");
@@ -371,7 +364,6 @@
                         echo "<script>alert('data is not inserted ');window.location.href='AddService.php';</script>";
                       }
                     }
-                  }
               ?>
          
                     <!-- /.card -->

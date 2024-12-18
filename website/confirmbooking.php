@@ -100,11 +100,7 @@
 
   <!-- about section -->
         <?php
-            $con=mysqli_connect("localhost","root","","demoproject");
-            if(!$con)
-            {
-                echo "error in connection";
-            }else{
+                include 'db_connection.php';
                 $q = $_GET['q'];
                 $selectquery = "select * from service where slno='$q' ";
                 $res = mysqli_query($con,$selectquery);
@@ -114,7 +110,7 @@
                 $selectquery1 = "select * from customer where email='$custemail' ";
                 $res1 = mysqli_query($con,$selectquery1);
                 $row1 = mysqli_fetch_assoc($res1); 
-            }               
+                    
         ?>
 
   <section class="about_section layout_padding">
@@ -130,29 +126,6 @@
           </div>
         <div class="col-md-6 px-0">
           <div class="detail-box">
-            <!-- <div class="heading_container ">
-              <h2>
-              <?php echo $row['servicename'];?>
-              </h2>
-
-              <b><h7>
-                Category : <?php echo $row['category'];?>
-                </h7><br>
-                
-                <h7>
-                Subcategory : <?php echo $row['subcategory'];?>
-                </h7><br><br>
-                </b>
-
-                <p>
-                <?php echo $row['description'];?>
-                </p>
-                Rs <?php echo $row['price'];?> 
-                <div class="btn-box">
-                <input type="submit" href="login.php?q=<?php echo $row['slno'];?>">  
-                </a>
-                </div>
-          </div> -->
           <form method="POST">
               <div class="contact_form-container">
                 <div>

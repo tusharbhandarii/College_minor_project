@@ -46,14 +46,10 @@
     <!-- end header section -->
   </div>
 
-  <!-- contact section -->
-  <?php
-        $con=mysqli_connect("localhost","root","","demoproject");
-            if(!$con)
-            {
-            echo "error in connection";
-            }
-    ?>
+  contact section -->
+      <?php
+        include 'db_connection.php';
+      ?>
 
   <section class="contact_section layout_padding">
     <div class="contact_bg_box">

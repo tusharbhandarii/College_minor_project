@@ -1,10 +1,5 @@
 <?php
-// Connect to the database
-$con = mysqli_connect("localhost", "root", "", "demoproject");
-
-if (!$con) {
-    echo "Error in connection";
-}
+include 'db_connection2.php';
 
 if (isset($_POST['category'])) {
     $category = mysqli_real_escape_string($con, $_POST['category']);

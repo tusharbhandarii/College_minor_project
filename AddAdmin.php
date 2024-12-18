@@ -126,10 +126,7 @@
               </form>
 
               <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                  echo "Error in connection";
-                }else{
+                include 'db_connection2.php';
                   function getExtension($str) 
                   {
                       $i = strrpos($str,".");
@@ -178,7 +175,6 @@
                         echo "<script>alert('data is not inserted ');window.location.href='AddAdmin.php';</script>";
                       }
                     }
-                  }
               ?>
 
 

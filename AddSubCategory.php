@@ -85,10 +85,7 @@
                       <option value="">Select Category</option>
                       <?php
                           // Establish database connection
-                          $con = mysqli_connect("localhost", "root", "", "demoproject");
-                          if(!$con){
-                              echo "<option disabled>Error in connection</option>";
-                          } else {
+                          include 'db_connection2.php';
                               $selectquery = "SELECT * FROM category";
                               $res = mysqli_query($con, $selectquery);
                               while($row = mysqli_fetch_assoc($res)){
@@ -96,7 +93,6 @@
                                   $categoryName = strtoupper(htmlspecialchars($row['categoryname']));
                                   echo "<option value=\"{$row['categoryname']}\">{$categoryName}</option>";
                               }
-                          }
                       ?>
                     </select>
                     <span class="error-message" id="categoryError"></span>
@@ -118,11 +114,6 @@
 
               <!-- PHP Script for Inserting Subcategory -->
               <?php
-                  // Establish database connection
-                  $con = mysqli_connect("localhost", "root", "", "demoproject");
-                  if(!$con){
-                      echo "<div class='alert alert-danger'>Error in connection</div>";
-                  } else {
                       if(isset($_POST['btn'])){
                           // Retrieve and sanitize user input
                           $category = mysqli_real_escape_string($con, $_POST['category']);
@@ -158,7 +149,6 @@
                               </script>";
                           }
                       }
-                  }
               ?> 
             <!-- /.card -->
           </div>
@@ -182,10 +172,6 @@
                   </thead>
                   <tbody>
                     <?php
-                        // Reuse the existing connection
-                        if(!$con){
-                            echo "<tr><td colspan='5' class='text-center text-danger'>Error in connection</td></tr>";
-                        } else {
                             $selectquery = "SELECT * FROM subcategory";
                             $res = mysqli_query($con, $selectquery);
                             while($row = mysqli_fetch_assoc($res)){
@@ -200,7 +186,6 @@
                                         <td><center><a class='btn btn-danger btn-sm' href='DeleteSubCategory.php?q={$scatid}' onclick='return confirm(\"Are you sure you want to delete this subcategory?\");'>Delete</a></center></td>
                                       </tr>";
                             }
-                        }
                     ?>
                   </tbody>
                 </table>

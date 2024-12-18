@@ -22,10 +22,7 @@
                 <?php
                 } else {
                             // Database connection
-                            $con = mysqli_connect("localhost", "root", "", "demoproject");
-                            if (!$con) {
-                                echo "Error in connection";
-                            } else {
+                            include 'db_connection.php';
                                 // Correct the query to avoid space issues
                                 $email = mysqli_real_escape_string($con, $_SESSION['un']);
                                 $selectquery = "SELECT name FROM customer WHERE email = '$email'";
@@ -37,7 +34,7 @@
                                 } else {
                                     $name = "Guest"; // Fallback in case the user is not found
                                 }
-                            }
+                            
                 ?>
                             <div style="display: flex; align-items: center; gap: 20px;">
                                 <span style="color: #fff;">

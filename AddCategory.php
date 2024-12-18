@@ -96,10 +96,7 @@
               <!-- PHP Script for Inserting Category -->
               <?php
                   // Establish database connection
-                  $con = mysqli_connect("localhost", "root", "", "demoproject");
-                  if(!$con){
-                      echo "Error in connection";
-                  } else {
+                  include 'db_connection2.php';
                       if(isset($_POST['btn'])){
                           // Retrieve and sanitize user input
                           $name = trim($_POST['name']);
@@ -126,7 +123,7 @@
 
                           $stmt->close();
                       }
-                  }
+                  
               ?> 
             <!-- /.card -->
           </div>
@@ -149,11 +146,6 @@
                   </thead>
                   <tbody>
             <?php
-                $con=mysqli_connect("localhost","root","","demoproject");
-                if(!$con)
-                {
-                    echo "error in connection";
-                }
                 $selectquery="select * from category ";
                 $res=mysqli_query($con,$selectquery);
                 while($row=mysqli_fetch_assoc($res))

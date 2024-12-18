@@ -312,10 +312,7 @@
            
               <!-- fetching image  -->
               <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                  echo "Error in connection";
-                }else{
+                include 'db_connection2.php';
                   function getExtension($str) 
                   {
                       $i = strrpos($str,".");
@@ -371,7 +368,6 @@
                         echo "<script>alert('data is not inserted ');window.location.href='AddTechnician.php';</script>";
                       }
                     }
-                  }
               ?>
 
 
@@ -424,11 +420,7 @@
 
      
             <?php
-                $con=mysqli_connect("localhost","root","","demoproject");
-                if(!$con)
-                {
-                    echo "error in connection";
-                }
+              include 'db_connection2.php';
                 $selectquery="select * from technician ";
                 $res=mysqli_query($con,$selectquery);
                 while($row=mysqli_fetch_assoc($res))

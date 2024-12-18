@@ -131,13 +131,9 @@
                       
                  
             <?php
-            $con = mysqli_connect('localhost','root','','demoproject');
-            if(!$con){
-              echo "Error in connection";
-            }else{
+            include 'db_connection2.php';
                 $selectquery="select * from service ";
                 $res=mysqli_query($con,$selectquery);
-            }
                 while($row=mysqli_fetch_assoc($res))
                 {
             ?>

@@ -20,7 +20,8 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <?php include('navbar.php') ?>
+  <?php include('navbar.php');
+        include 'db_connection2.php'; ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -80,12 +81,8 @@
                 </div>
               </form>
               <?php
-                         $con = mysqli_connect('localhost','root','','demoproject');
-                         if(!$con){
-                           echo "Error in connection";
-                         }
-                         $q=$_GET['q'];
-                        if(isset($_POST['btn'])){
+                            $q=$_GET['q'];
+                            if(isset($_POST['btn'])){
                             $status1=$_POST['status1'];
                             $editquery = "UPDATE booking SET status='$status1' WHERE bookingid='$q' ";
                             if(mysqli_query($con, $editquery))

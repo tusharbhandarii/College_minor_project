@@ -18,7 +18,8 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <?php include('navbar.php') ?>
+  <?php include('navbar.php') ;
+        include 'db_connection2.php';?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -62,11 +63,6 @@
               
 
             <?php
-                $con = mysqli_connect("localhost", "root","","demoproject");
-                    if(!$con){
-                        echo "error in connection";
-                    }else{
-
                         $q = $_GET['q'];
                         $selectquery = "select * from subcategory where scatid='$q' ";
                         $res = mysqli_query($con,$selectquery);
@@ -104,8 +100,6 @@
                             alert('data is not updated !! ');window.location.href='AddSubCategory.php';</script>";
                             }
                         }
-                    }
-                        
             ?> 
   
             <!-- /.card -->
