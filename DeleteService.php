@@ -1,7 +1,7 @@
 <?php
     $q = $_GET['q'];
 
-    $con = mysqli_connect('localhost','root','','demoproject');
+    include 'db_connection2.php';
     $delequery = "DELETE FROM service WHERE slno='$q'";
     
     if(mysqli_query($con,$delequery)){

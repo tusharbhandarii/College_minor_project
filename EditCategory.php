@@ -62,10 +62,7 @@
               
 
             <?php
-                $con = mysqli_connect("localhost", "root","","demoproject");
-                    if(!$con){
-                        echo "error in connection";
-                    }else{
+                include 'db_connection2.php';
 
                         $q = $_GET['q'];
                         $selectquery = "select * from category where catid='$q' ";
@@ -103,9 +100,7 @@
                             echo "<script>
                             alert('data is not updated !! ');window.location.href='AddSubCategory.php';</script>";
                             }
-                        }
-                    }
-                        
+                        }          
             ?> 
   
             <!-- /.card -->

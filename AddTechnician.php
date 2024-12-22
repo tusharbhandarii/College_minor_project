@@ -63,12 +63,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>General Form</h1>
+            <h1>Add Technician</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">General Form</li>
+              <li class="breadcrumb-item active">Add Technician</li>
             </ol>
           </div>
         </div>
@@ -84,7 +84,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Quick Example</h3>
+                <h3 class="card-title">Add New Technician</h3>
               </div>
               <!-- /.card-header -->
 
@@ -312,10 +312,7 @@
            
               <!-- fetching image  -->
               <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                  echo "Error in connection";
-                }else{
+                include 'db_connection2.php';
                   function getExtension($str) 
                   {
                       $i = strrpos($str,".");
@@ -371,7 +368,6 @@
                         echo "<script>alert('data is not inserted ');window.location.href='AddTechnician.php';</script>";
                       }
                     }
-                  }
               ?>
 
 
@@ -404,7 +400,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
+                <h3 class="card-title">Technician List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -417,8 +413,6 @@
                     <th>Email</th>
                     <th>Image</th>
                     <th>Specialize</th>
-                    <th></th>
-                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -426,11 +420,7 @@
 
      
             <?php
-                $con=mysqli_connect("localhost","root","","demoproject");
-                if(!$con)
-                {
-                    echo "error in connection";
-                }
+              include 'db_connection2.php';
                 $selectquery="select * from technician ";
                 $res=mysqli_query($con,$selectquery);
                 while($row=mysqli_fetch_assoc($res))
@@ -443,8 +433,8 @@
                         <td><?php echo $row['email'];?></td>
                         <td><?php echo $row['image'];?></td>
                         <td><?php echo $row['specialize'];?></td>
-                        <td><a class="btn btn-primary" href="EditTechnician.php?q=<?php echo $row['slno'];?>">edit</a></td>
-                        <td><a class="btn btn-primary" href="DeleteTechnician.php?q=<?php echo $row['slno'];?>">delete</a></td>
+                        <td><center><a class="btn btn-primary" href="EditTechnician.php?q=<?php echo $row['slno'];?>">Edit</a></center></td>
+                        <td><center><a class="btn btn-danger" href="DeleteTechnician.php?q=<?php echo $row['slno'];?>">Delete</a></center></td>
 
                 </tr>
             <?php

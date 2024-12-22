@@ -37,7 +37,8 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <?php include('navbar.php') ?>
+  <?php include('navbar.php');
+        include 'db_connection2.php'; ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -81,16 +82,10 @@
               
 
             <?php
-                $con = mysqli_connect("localhost", "root","","demoproject");
-                    if(!$con){
-                        echo "error in connection";
-                    }else{
-
                         $q = $_GET['q'];
                         $selectquery = "select * from technician where slno='$q' ";
                         $res = mysqli_query($con,$selectquery);
                         $row = mysqli_fetch_assoc($res); 
-                    }
             ?>
 
                         <!-- form start -->
@@ -352,10 +347,6 @@
 
             <!-- fetching image  -->
             <?php
-                $con = mysqli_connect('localhost','root','','demoproject');
-                if(!$con){
-                  echo "Error in connection";
-                }else{
                   function getExtension($str) 
                   {
                       $i = strrpos($str,".");
@@ -411,7 +402,6 @@
                         echo "<script>alert('data is not inserted ');window.location.href='AddTechnician.php';</script>";
                       }
                     }
-                  }
               ?>
   
             <!-- /.card -->
