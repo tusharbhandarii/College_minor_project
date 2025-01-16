@@ -33,7 +33,7 @@
 
     <!-- Sidebar -->
    
-    <?php include ('sidebar.php')?>
+    <?php include ('sidebar.php') ?> 
 
     <!-- /.sidebar -->
   </aside>
@@ -45,7 +45,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Admin Form</h1>
+            <h1>General Form</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -80,53 +80,49 @@
                 <div class="card-body">
                   <!-- name  -->
                   <div class="form-group">
-                    <label for="exampleInputName">Admin Name</label>
-                    <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter name">
+                    <label for="exampleInputName">Heading</label>
+                    <input name="name" type="text" class="form-control" id="exampleInputName" placeholder="Enter Heading">
                   </div>
                   <!-- ph no  -->
                   <div class="form-group">
-                    <label for="exampleInputPhno">Mobile Number</label>
-                    <input name="phno" type="text" class="form-control" id="exampleInputPhno" placeholder="Enter number">
+                    <label for="exampleInputPhno">Subheading</label>
+                    <input name="phno" type="text" class="form-control" id="exampleInputPhno" placeholder="Enter Subheading">
                   </div>
+                  <!-- address  -->
+                  
                   <!-- email  -->
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                  </div>
+                 
                   <!-- image  -->
                   <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
-                      </div>
+                      <label for="exampleInputFile">File input</label>
+                      <div class="input-group">
+                          <div class="custom-file">
+                              <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
+                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+                    <!-- specelize  -->
+                    
                   <!-- password  -->                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input name="pass" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                  </div>
+                  
                   <!-- repassword  -->
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Repassword</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repassword">
-                  </div>
+                  
 
                 </div>
                 <!-- /.submit button -->
 
                 <div class="card-footer">
-                 <center> <button name="btn" type="submit" class="btn btn-primary" >Submit</button></center>
+                  <button name="btn" type="submit" class="btn btn-primary" >Submit</button>
                 </div>
               </form>
-
+           
+              <!-- fetching image  -->
               <?php
-                 $con = mysqli_connect('localhost','root','','demoproject');
+                $con = mysqli_connect('localhost','root','','demoproject');
                 if(!$con){
                   echo "Error in connection";
                 }else{
@@ -155,7 +151,7 @@
                        else
                        {
                               $image_name=time().'.'.$extension;
-                              $newname="uploadimage/admin/".$image_name;        
+                              $newname="uploadimage/banner/".$image_name;        
                               $copied = copy($_FILES['image']['tmp_name'], $newname);
                               if (!$copied) 
                               {
@@ -165,17 +161,16 @@
                           }
                       }
 
-                      $Name = $_POST['name'];
-                      $Phno = $_POST['phno'];
-                      $Email = $_POST['email'];
-                      $Pass = $_POST['pass'];
+                      $name = $_POST['name'];
+                      $phno = $_POST['phno'];
                       
-                      $insertQuery = "INSERT INTO admin VALUES('','$Name','$Phno','$Email','$Pass','$image_name')";
+                      
+                      $insertQuery = "INSERT INTO banner VALUES('','$name','$phno','$image_name')";
                       if(mysqli_query($con,$insertQuery))
                       {
-                        echo "<script>alert('data inserted ');window.location.href='AddAdmin.php';</script>";
+                        echo "<script>alert('data inserted ');window.location.href='AddBanner.php';</script>";
                       }else{
-                        echo "<script>alert('data is not inserted ');window.location.href='AddAdmin.php';</script>";
+                        echo "<script>alert('data is not inserted ');window.location.href='AddBanner.php';</script>";
                       }
                     }
                   }
@@ -218,11 +213,12 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Phn_no</th>
-                    <th>Email</th>
+                    <th>slno</th>
+                    <th>Heading</th>
+                    <th>Subheading</th>
+                    
                     <th>Image</th>
+                    
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -230,33 +226,32 @@
                   <tbody>
 
 
-
-                  
-                 
-               <?php
+     
+            <?php
                 $con=mysqli_connect("localhost","root","","demoproject");
                 if(!$con)
                 {
                     echo "error in connection";
                 }
-                $selectquery="select * from admin ";
+                $selectquery="select * from banner ";
                 $res=mysqli_query($con,$selectquery);
                 while($row=mysqli_fetch_assoc($res))
                 {
-                    ?>
-                    <tr> <td><?php echo $row['AID'];?></td>
-                    <td><?php echo $row['Name'];?></td>
-                        <td><?php echo $row['Phno'];?></td>
-                        <td><?php echo $row['Email'];?></td>
+            ?>
+                    <tr> 
+                    <td><?php echo $row['slno'];?></td>
+                        <td><?php echo $row['heading'];?></td>
+                        <td><?php echo $row['subheading'];?></td>
                         
-                        <td><img src="uploadimage/admin/<?php echo $row['img']?>"width=50px height=50px></td>
-                        <td><a href="EditAdmin.php?q=<?php echo $row['AID'];?>">edit</a></td>
-                        <td><a href="DeleteAdmin.php?q=<?php echo $row['AID'];?>">delete</a></td>
+                        <td><?php echo $row['image'];?></td>
+                        
+                        <td><a class="btn btn-primary" href="EditBanner.php?q=<?php echo $row['slno'];?>">edit</a></td>
+                        <td><a class="btn btn-primary" href="DeleteBanner.php?q=<?php echo $row['slno'];?>">delete</a></td>
 
                 </tr>
-                <?php
+            <?php
                 }
-                ?>
+            ?>
                 
                  
              
